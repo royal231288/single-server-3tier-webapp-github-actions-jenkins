@@ -31,7 +31,7 @@ env:
 jobs:
   deploy:
     ##runs-on: ubuntu-latest
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, batch08]
     
     steps:
     - name: Checkout code
