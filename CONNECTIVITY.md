@@ -1,7 +1,7 @@
 # BMI Health Tracker - Connectivity & Endpoint Testing Guide
 
 This guide provides detailed instructions for testing database connectivity, backend API endpoints, and frontend accessibility from the EC2 server after deployment.
-
+ 
 ---
 
 ## Table of Contents
