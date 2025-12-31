@@ -389,52 +389,52 @@ jobs:
           echo ""
         ENDSSH
 
-    # - name: Health Check
-    #   if: github.event.inputs.skip_health_check != 'true'
-    #   run: |
-    #     ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << "ENDSSH"
-    #       # Load NVM
-    #       export NVM_DIR="$HOME/.nvm"
-    #       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    - name: Health Check
+      if: github.event.inputs.skip_health_check != 'true'
+      run: |
+        ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << "ENDSSH"
+          # Load NVM
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           
-    #       echo "=========================================="
-    #       echo "Running Health Checks"
-    #       echo "=========================================="
+          echo "=========================================="
+          echo "Running Health Checks"
+          echo "=========================================="
           
-    #       # Wait for services to start
-    #       echo "Waiting for services to stabilize..."
-    #       sleep 5
+          # Wait for services to start
+          echo "Waiting for services to stabilize..."
+          sleep 5
           
-    #       # Check backend health
-    #       echo ""
-    #       echo "Testing backend health..."
-    #       HEALTH_CHECK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/health || echo "000")
+          # Check backend health
+          echo ""
+          echo "Testing backend health..."
+          HEALTH_CHECK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/health || echo "000")
           
-    #       if [ "$HEALTH_CHECK" = "200" ]; then
-    #         echo "Backend health check passed (HTTP $HEALTH_CHECK)"
-    #       else
-    #         echo "Backend health check failed (HTTP $HEALTH_CHECK)"
-    #         echo "Backend logs:"
-    #         pm2 logs bmi-backend --lines 20 --nostream
-    #         exit 1
-    #       fi
+          if [ "$HEALTH_CHECK" = "200" ]; then
+            echo "Backend health check passed (HTTP $HEALTH_CHECK)"
+          else
+            echo "Backend health check failed (HTTP $HEALTH_CHECK)"
+            echo "Backend logs:"
+            pm2 logs bmi-backend --lines 20 --nostream
+            exit 1
+          fi
           
-    #       # Check PM2 status
-    #       echo ""
-    #       echo "PM2 Status:"
-    #       pm2 status
+          # Check PM2 status
+          echo ""
+          echo "PM2 Status:"
+          pm2 status
           
-    #       # Check Nginx if installed
-    #       if command -v nginx &> /dev/null; then
-    #         echo ""
-    #         echo "Nginx Status:"
-    #         sudo systemctl status nginx --no-pager -l
-    #       fi
+          # Check Nginx if installed
+          if command -v nginx &> /dev/null; then
+            echo ""
+            echo "Nginx Status:"
+            sudo systemctl status nginx --no-pager -l
+          fi
           
-    #       echo ""
-    #       echo "All health checks passed"
-    #       echo ""
-    #     ENDSSH
+          echo ""
+          echo "All health checks passed"
+          echo ""
+        ENDSSH
 
     - name: Deployment Summary
       if: always()
