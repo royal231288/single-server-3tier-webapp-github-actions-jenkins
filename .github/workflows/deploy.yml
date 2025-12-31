@@ -339,8 +339,8 @@ jobs:
             
             # Deploy to Nginx
             echo "Deploying to Nginx..."
-            sudo mkdir -p ${{ env.FRONTEND_DEPLOY_PATH }}
-            sudo cp -r dist/* ${{ env.FRONTEND_DEPLOY_PATH }}/
+            mkdir -p ${{ env.FRONTEND_DEPLOY_PATH }}
+            cp -r dist/* ${{ env.FRONTEND_DEPLOY_PATH }}/
             sudo chown -R www-data:www-data ${{ env.FRONTEND_DEPLOY_PATH }}
             
             # Configure Nginx
